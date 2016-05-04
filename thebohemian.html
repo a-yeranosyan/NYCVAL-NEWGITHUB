@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>NYC Values - The Bohemian</title>
+  <LINK href="styles.css" rel="stylesheet" type="text/css">
+  <link rel="icon" href=img/favicon.ico>
+<!-- Fonts -->   
+  <link href='https://fonts.googleapis.com/css?family=Karla' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700|Muli|Sintony|Roboto:400,500,700' rel='stylesheet' type='text/css'>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+  <script src="dictionaries.js"></script>
+
+  <script src="typeahead.js/typeahead.bundle.js"></script>
+  <script src="typeahead.js/typeahead.jquery.js"></script>
+
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <!-- fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,900italic,400italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Teko:700,600&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Hammersmith+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Old+Standard+TT' rel='stylesheet' type='text/css'>
+  <!-- end fonts-->
+  <style>
+  
+  
+   
+  </style>
+  <!-- Facebook Optimization -->
+    <meta property="og:image" content="https://nycvaluesdev.firebaseapp.com/img/posterframes/advocateposter.jpg"/>
+  <meta property="og:title" content="The Advocate"/>
+  <meta property="og:site_name" content="NYC Values"/>
+<!-- Animation script -->
+  <script>
+    var dataRef = new Firebase('https://nycvaluesdev.firebaseio.com');
+    var starterValues = [];
+    var myStory = 'lifeArtist';
+    var storyRef = dataRef.child('nycvaluesdev/' + myStory);
+    var scrollerRef = dataRef.child('nycvaluesdev/' + 'scroller/' + myStory);
+    var valueDictionary = [];
+    var numVotes = [];
+    var maxWidth = 120;
+    
+
+    //var svg = d3.select("svg");
+
+
+      $(document).ready(function() {
+
+        storyRef.on("value", function(snapshot) {
+        numVotes = [];
+        valueDictionary = []
+        //console.log(snapshot.val());
+          /*snapshot.forEach(function(childSnapshot){
+            if(childSnapshot.val().room_name == myRoom){
+              console.log(childSnapshot.val().number_users);
+            }
+          })*/
+          $.each(snapshot.val(), function(key, value){
+            numVotes.push(value)
+            for(i = 0; i < value; i++){
+              //console.log(key)
+              valueDictionary.push(key)
+            }
+            //console.log(value);
+          })
+          //console.log(valueDictionary)
+          $.each(valueDictionary, function(k,v){
+    $('#verticalScroller').append("<div>" + v + "</div></br>");
+  })
+          
+          //drawBubbles();
+
+        })
+         
+        /*dataRef.child("votes/" + myRoom + "/active_users").on("value", function(snapshot){
+        console.log("current active users " + snapshot.val());
+        y.domain([0, snapshot.val() * 5]);
+      });*/
+
+
+
+        // $("nav").fadeOut(0.1);
+
+        // $("body").mousemove(function( event ) {
+        //   $("nav").fadeIn(100);
+
+        //   myStopFunction();
+        //   myFunction();
+        //   });
+
+        // function myFunction() {
+        //   myVar = setTimeout(function(){
+        //   $("nav").fadeOut(300);
+        //   }, 1000);
+        //   }
+        // function myStopFunction() {
+        //   if(typeof myVar != 'undefined'){
+        //   clearTimeout(myVar);
+        //   }
+        // }
+        
+        // Hide menu once we know its width
+        $('#clickme').click(function() {
+            var $rightbox = $('.rightbox')
+            if ($rightbox.is(':visible')) {
+                // Slide away
+                $("#clickme").attr("src", "img/arrow.png")
+                $rightbox.animate({right: -($rightbox.outerWidth())},250,"linear", function() {
+                    $rightbox.hide();
+                $("nav").fadeOut(200);
+                });                
+            }
+            else {
+                // Slide in
+                $("#clickme").attr("src", "img/arrow2.png")
+                $rightbox.show().animate({right:0});
+                $("nav").fadeIn(250);
+            }
+          });
+        
+      });
+      
+
+// Visualization script
+      var starterDictionary = {
+    "Freedom": 1,
+    "Diversity": 1,
+    "Money": 1,
+    "Art" : 10,
+    "Dirty" : 1,
+    "Hustle" : 1,
+    "Resilience" : 1,
+    "Liberal" : 1,
+    "Crazy" : 2
+  }
+
+
+  //console.log(valueDictionary)
+  
+
+  /*$.each(starterDictionary, function(k,v){
+    var num = _.range(v);
+    $.each(num, function(key, val){
+      starterValues.push(k);
+    })
+  })
+
+  $.each(starterValues, function(k,v){
+    $('#verticalScroller').append("<div>" + v + "</div>");
+  })*/
+  
+  function vote(value){
+    console.log(valueDictionary);
+    var bubbleRef = storyRef.child(value);
+    
+
+    //scrollerRef.push(value)
+    var bad = moderate(value);
+    if(!bad){
+      bubbleRef.transaction(function (current_value) {
+        return (current_value || 0) + 1;
+      });
+      showWord(value, true);
+    }
+    
+  }
+
+  function addWord(newValue){
+    if (starterDictionary[newValue] == undefined){
+       starterDictionary[newValue] = 1;
+    } else {
+       starterDictionary[newValue] = starterDictionary[newValue] + 1;
+    }
+    showWord(newValue, true);
+  }
+
+  function showWord(value, special){
+    if (special){
+      $('#verticalScroller').prepend("<div class='red new'>" + value + "</div></br>");
+    } else {
+      $('#verticalScroller').prepend("<div class='new'>" + value + "</div></br>");
+    }
+    
+    $('.new').fadeIn(1000, function(){
+      $(this).removeClass("new");
+    });
+  }
+
+
+  function moderate(input){
+    var dictionary = Object.keys(Bad_Words);
+    var input_words = input.split(" ");
+    var word_in = 1;
+    var bad = false;
+    for (i = 0; i < input_words.length; i++){
+      word_in = dictionary.indexOf(input_words[i]);
+      if(word_in > -1){
+        bad = true;
+      }
+      console.log(word_in)
+    }
+    return bad;
+  }
+  
+  /* Moving the words down */
+  setInterval(function(){
+    //console.log(Object.keys(Bad_Words))
+    var last = $('#verticalScroller div').last();
+    last.remove();
+    var index = Math.round((valueDictionary.length-1) * Math.random());
+    showWord(valueDictionary[index], false);
+  }, 1000);
+
+
+  // To-dos:
+
+  // Reset the timer when a user votes
+  // Animate it better
+  // Input your own value functions
+  function addValue(){
+    var inputValue = document.getElementById("Value1").value;
+    vote(inputValue);
+    document.getElementById("Value1").value= " ";
+
+  }
+
+  </script>
+  <script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+</head>
+  <body>
+  <iframe id = "facebook_share" src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fnyc-values.com%2Fthebohemian.html&layout=button&mobile_iframe=true&width=58&height=20&appId" width="58" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+  <span id = "twitter_share"><a class="twitter-share-button"
+        href="https://twitter.com/share"
+        data-size="default"
+        data-url="https://nyc-values.com/theabohemian.html"
+        data-related="twitterapi,twitter"
+        data-hashtags="nycvalues, nyu, nyustudio20"
+        data-text="What are NYC values? Help us find the answer"
+        id = "twitter_share">
+      Tweet
+    </a></span>
+    <div class=wrapper>
+      <div class=rightbox> 
+        <div class=textxplainer>
+        What values are represented in this story? Add your answers below!
+
+          
+        </div> 
+        <div id="verticalScroller">
+        </div>
+      
+        <!--<svg width="120" height="720"></svg>-->
+        <div class=rightbuttons>
+          <input type="text"  maxlength="15" id="Value1" placeholder="Type your value here">
+          <input type="submit" value="Add Value" onclick="addValue()"> 
+        </div>
+      </div>
+      <img src=img/arrow2.png id=clickme>
+   <div class = "dropdown_menu">
+                
+            <span class="dropdown_menu2"><a href=360menu.html?html5=never target="_self"><img src=img/menustoriesabout.png></a>
+            <div class = "dropdown_menu_content">
+                        <div><a class="story_menu_links" href='thecitykid.html'>The City Kid</a></div>
+                        <div><a class="story_menu_links" href='theboyqueen.html'>The Boy Queen</a></div>
+                        <div><a class="story_menu_links" href='thebohemian.html'>The Bohemian</a></div>
+                        <div><a class="story_menu_links" href='theadvocate.html'>The Advocate</a></div>
+                        <div><a class="story_menu_links" href='theresponders.html'>The Responders</a></div>
+                        <div><a class="story_menu_links" href='thespeakers.html'>The Speakers</a></div>
+            </div></span>
+
+            <a href=aboutus.html target="_self"><img src=img/menuaboutabout.png></a>
+            <a href=index.html target="_Self"><img src=img/menuvaluesabout.png></a>
+    </div>
+      <iframe src='https://player.vimeo.com/video/161964416' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen class="iframeme"></iframe>
+    </div>
+    
+  </body>
+</html>
