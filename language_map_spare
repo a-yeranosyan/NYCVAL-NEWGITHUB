@@ -79,11 +79,6 @@
 
 		}
 
-		.thumbnail{
-			background-color:black; 
-			width: 100%;
-		}
-
 
 
 
@@ -116,7 +111,7 @@
 	$(document).ready(function(){
 
 		$('#close').hide();
-		/*$(".vid_wrapper").mouseenter(function(){
+		$(".vid_wrapper").mouseenter(function(){
 			if($(this).find('.video_frame').get(0).paused){
 				$(this).find('.video').hide();
 				$(this).find('.image').show();
@@ -128,62 +123,22 @@
 				$(this).find('.image').hide();
 				$(this).find('.video').show();
 			}
-		})*/
+		})
 
 
-			$(".vid_wrapper").mouseenter(function(){
-				if($('.video_frame').length <= 0){
-					
-					$(this).find('.thumbnail').hide();
-					$(this).find('.image').show();
-				}
 
-			})
-
-			$(".vid_wrapper").mouseleave(function(){
-				if($('.video_frame').length <= 0){
-				//if($(this).find('.video_frame').get(0).paused){
-					$(this).find('.image').hide();
-					$(this).find('.thumbnail').show();
-				}
-			})
 		
 			$('.vid_wrapper').click(function() {
 				current_video = $(this).attr('id')
-				video_source = 'language_map/' + current_video.toLowerCase() + '.mp4';
-				console.log(video_source)
-				var video = $('<video />', {
-					class: 'video_frame',
-					src: video_source,
-					type:'video/mp4',
-					
-
-
-				});
-				video.bind("ended", function() {
-   					onEnded()
-				});
-				console.log(video)
-
-				
-				video.appendTo(this)
 				//console.log(current_video);
 				if($(this).find('.video_frame').get(0).paused || ($(this).find('.video_frame').get(0).ended)){
 
-					/* var video = $('<video />', {
-        			id: 'video',
-        			src: 'http://video-js.zencoder.com/oceans-clip.mp4',
-        			type: 'video/mp4',
-       				controls: true
-    				});
-    				video.appendTo($('#gallery'));*/
+
 
 				
 
-					$(this).find('.thumbnail').hide();
 					$(this).find('.image').hide();
-					$(this).find('.video_frame').show();
-					//$(this).find('.video').show();
+					$(this).find('.video').show();
 					var position = $(this).position();
 					$(this).css('zIndex', '60');
 					$(this).css('position', 'absolute');
@@ -257,10 +212,8 @@
 			console.log('calling ended')
 			console.log(current_video)
 			$('#close').hide();
-			$('.video_frame').remove()
 			
 			$('#' + current_video).addClass('vid_wrapper');
-			$('.vid_wrapper').find('.thumbnail').show();
 			$('.vid_wrapper').show();
 			$('.vid_wrapper').css('zIndex', '1')
 
@@ -282,17 +235,17 @@
 			console.log('calling close')
 			console.log(current_video)
 			$('#close').hide();
-			$('.video_frame').remove()
+
 			$('#' + current_video).addClass('vid_wrapper');
 			$('.vid_wrapper').show();
-			$('.vid_wrapper').find('.thumbnail').show();
+
 			$('.vid_wrapper').css('opacity', 1);
 			$('#intro_text').show();
 			$('.vid_wrapper').css('zIndex', '1')
 			$('.vid_wrapper').css('left', '0%')
 			$('.vid_wrapper').css('position', 'relative')
 			$('.vid_wrapper').width('20%')
-			//$('#' + current_video).find('.video_frame').get(0).pause()
+			$('#' + current_video).find('.video_frame').get(0).pause()
 			
 		}
 
@@ -335,84 +288,64 @@
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapjapanese.png">
 			</div>
-			<div class = "thumbnail_frame">
-				<img class = "thumbnail" src="language_map/thumbnail_images/Japanese.jpg">
-			</div>
-
-
-			<!--<div class="video">
+			<div class="video">
 				<video onended="onEnded()" class="video_frame"><source src="language_map/japanese.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		<div class = "vid_wrapper" id ="Hindi">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemaphindi.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Hindi.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/hindi.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
-		<div class = "vid_wrapper" id ="Tibetan">
+		<div class = "vid_wrapper" id ="Tibet">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/language_map_tibetan.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Tibetan.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/tibetan.mp4" type="video/mp4"></video>
-			</div>-->
+			</div>
 			
 		</div>
 			<div class = "vid_wrapper" id ="Russian">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemaprussian.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Russian.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/russian.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		<div class = "vid_wrapper" id ="Korean">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapkorean.png">
 			</div>
-			<div >
-				<img class = "thumbnail" src="language_map/thumbnail_images/Korean.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/korean.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		<div class = "vid_wrapper" id ="Bengali">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapbengalie.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Bengali.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/bengali.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 
@@ -420,55 +353,43 @@
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapnorwegian.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Norwegian.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/norwegian.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		<div class = "vid_wrapper" id ="Turkish">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapturskish.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Turkish.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 				<video onended="onEnded()" class="video_frame"><source src="language_map/turkish.mp4" type="video/mp4"></video>
-			</div>-->
+			</div>
 			
 		</div>
 		<div class = "vid_wrapper" id ="Spanish">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapspanish.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Spanish.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/spanish.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		<div class = "vid_wrapper" id ="Urdu">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapurdu.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Urdu.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/urdu.mp4" type="video/mp4"></video>
 				
 
-			</div>-->
+			</div>
 			
 		</div>
 		
@@ -476,42 +397,33 @@
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapfrench.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/French.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/french.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		<div class = "vid_wrapper" id ="Cantonese">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapcantonese.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Cantonese.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/cantonese.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
-		<div class = "vid_wrapper" id ="Nepali">
+		<div class = "vid_wrapper" id ="Nepal">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapnepali.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Nepali.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/nepali.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		
@@ -519,14 +431,11 @@
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapthai.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Thai.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/thai.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		
@@ -534,55 +443,43 @@
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapgalego.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Galego.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/galego.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		<div class = "vid_wrapper" id ="Italian">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapitalian.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Italian.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/italian.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 	
-		<div class = "vid_wrapper" id ="Farsi2">
+		<div class = "vid_wrapper" id ="Farsi">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/language_mapfarsi.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Farsi.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/farsi2.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 			<div class = "vid_wrapper" id ="Mandarin">
 			<div class="image">
 				<img class="image_frame"src="language_map/images/language_map_mandarin.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Mandarin.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 				<video onended="onEnded()" class="video_frame"><source src="language_map/mandarin.mp4" type="video/mp4"></video>
-			</div>!-->
+			</div>
 			
 		</div>
 		
@@ -592,14 +489,11 @@
 			<div class="image">
 				<img class="image_frame"src="language_map/images/languagemapgreek.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Greek.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 
 				<video onended="onEnded()" class="video_frame"><source src="language_map/greek.mp4" type="video/mp4"></video>
 
-			</div>-->
+			</div>
 			
 		</div>
 		
@@ -607,12 +501,9 @@
 			<div class="image">
 				<img class="image_frame"src="language_map/images/language_map_arabic.png">
 			</div>
-			<div>
-				<img class = "thumbnail" src="language_map/thumbnail_images/Arabic.jpg">
-			</div>
-			<!--<div class="video">
+			<div class="video">
 				<video onended="onEnded()" class="video_frame"><source src="language_map/arabic.mp4" type="video/mp4"></video>
-			</div>-->
+			</div>
 			
 		</div>
 		
