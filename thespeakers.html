@@ -98,6 +98,12 @@
 				width: 100%;
 			}
 		}
+		#facebook_share {
+			left:92vw;
+		}
+		#twitter_share {
+			left:85vw;
+		}
 
 		
 
@@ -301,10 +307,36 @@
 
     
 	</script>
-	
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));</script>	
 </head>
 ​
 <body>
+<iframe id = "facebook_share" src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fnyc-values.com%2Ftheadvocate.html&layout=button&mobile_iframe=true&width=58&height=20&appId" width="58" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+   <span id = "twitter_share"><a class="twitter-share-button"
+        href="https://twitter.com/share"
+        data-size="default"
+        data-url="https://nyc-values.com/theadvocate.html"
+        data-related="twitterapi,twitter"
+        data-hashtags="nycvalues, nyu, nyustudio20"
+        data-text="What are NYC values? Help us find the answer"
+        id = "twitter_share">
+      Tweet
+    </a></span>
 
 	 <div class = "dropdown_menu">
 				<span class="dropdown_menu2">
