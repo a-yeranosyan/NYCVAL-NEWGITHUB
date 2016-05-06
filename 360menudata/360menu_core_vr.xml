@@ -571,7 +571,7 @@ stopautorotation();
 	onloaded="videointerface_setup_interface(get(name));"
 	onvideoready="videointerface_videoready();"
 
-videourl="%FIRSTXML%/new5555_10/menu360final.mp4"
+videourl="%FIRSTXML%/new5555_10/final_update_correct.mp4"
 posterurl="%FIRSTXML%/new5555_10/frame.jpg"
 	autoresume="true"
 	preferredformat.chrome="mp4"
